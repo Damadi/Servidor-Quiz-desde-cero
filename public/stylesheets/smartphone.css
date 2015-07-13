@@ -4,3 +4,5 @@ h2 span, section h3 { display: none; }
 body 				{ font-size: xx-large; }
 input, button   	{ font-size: x-large; }
 footer      		{ font-size: large; }
+
+.autor {font-size: large}
