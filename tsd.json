@@ -13,6 +13,9 @@
     },
     "express-partials/express-partials.d.ts": {
       "commit": "2a5858c16563634453533009242b8e0b18521370"
+    },
+    "sequelize/sequelize.d.ts": {
+      "commit": "0fff32b558aa91ba24cfca5479aba02e4ef2fafe"
     }
   }
 }
