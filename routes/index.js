@@ -7,8 +7,13 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
 
+//autoload :quizId
+router.param('quizId', quizcontroller.load); 
+
+//Rutas de quizes
 router.get('/author',quizcontroller.author);
-router.get('/quizes/answer',quizcontroller.answer);
-router.get('/quizes/question',quizcontroller.question);
+router.get('/quizes',quizcontroller.index);
+router.get('/quizes/:quizId(\\d+)',quizcontroller.show);
+router.get('/quizes/:quizId(\\d+)/answer',quizcontroller.answer);
 
 module.exports = router;
