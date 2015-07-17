@@ -20,12 +20,6 @@ exports.index = function(req,res){
 		
 };
 
-exports.buscar = function(req,res){ 
-	models.Quiz.findAll({where: [req.query.campo + " like ?", '%' + req.query.buscar + '%']}).then(function(quizes){
-		res.render('quizes/index', {quizes: quizes});	
-	})
-};
-
 exports.show = function(req,res){ 
 	models.Quiz.find(req.params.quizId).then(function(quiz){
 		res.render('quizes/show', {quiz: req.quiz});
