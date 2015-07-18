@@ -21,7 +21,7 @@ exports.index = function(req,res){
 	}else{		
 		str = str.split(' ').join('%');
 	}	
-	models.Quiz.findAll({where: ["pregunta like ?", '%' + str + '%']}).then(function(quizes){
+	models.Quiz.findAll({where: ["lower(pregunta) like ?", '%'+ str.toLowerCase() + '%'], order: 'pregunta ASC'}).then(function(quizes){
 			res.render('quizes/index', {quizes: quizes});	
 		})	
 };
@@ -33,6 +33,11 @@ exports.show = function(req,res){
 
 exports.author = function(req,res){ 	
 	res.render('author');
+};
+
+exports.new = function(req,res){ 	
+	var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
+	res.render('quizes/new', {quiz: quiz});
 };
 
 exports.answer = function(req,res){
