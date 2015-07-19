@@ -35,6 +35,11 @@ exports.author = function(req,res){
 	res.render('author');
 };
 
+exports.new = function(req,res){ 	
+	var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
+	res.render('quizes/new', {quiz: quiz});
+};
+
 exports.answer = function(req,res){
 	
 	models.Quiz.find(req.params.quizId).then(function(quiz){	
