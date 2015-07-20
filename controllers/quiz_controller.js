@@ -21,7 +21,7 @@ exports.index = function(req,res){
 	}else{		
 		str = str.split(' ').join('%');
 	}	
-	models.Quiz.findAll({where: ["lower(pregunta) like ?", '%'+ str.toLowerCase() + '%'], order: 'pregunta ASC'}).then(function(quizes){
+	models.Quiz.findAll({where: ["lower(pregunta) like ?", '%'+ str.toLowerCase() + '%'], order: 'tema ASC'}).then(function(quizes){
 			res.render('quizes/index', {quizes: quizes,errors:[]});	
 		})	
 };
@@ -32,12 +32,7 @@ exports.show = function(req,res){
 };
 
 exports.author = function(req,res){ 	
-	res.render('author', {error: []});
-};
-
-exports.new = function(req,res){ 	
-	var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
-	res.render('quizes/new', {quiz: quiz,errors:[]});
+	res.render('author', {errors: []});
 };
 
 exports.answer = function(req,res){
@@ -54,7 +49,7 @@ exports.answer = function(req,res){
 };
 
 exports.nuevo = function(req,res){ 	
-	var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta"});
+	var quiz = models.Quiz.build({pregunta: "Pregunta", respuesta: "Respuesta", tema: "Tema"});
 	res.render('quizes/new', {quiz: quiz,errors:[]});
 };
 
@@ -67,7 +62,7 @@ exports.create = function(req,res){
 			if(error){
 				res.render('quizes/new',{quiz: quiz, errors: error.errors})
 			}else{
-				quiz.save({fields: ["pregunta","respuesta"]}).then(function(){
+				quiz.save({fields: ["pregunta","respuesta","tema"]}).then(function(){
 					res.redirect('/quizes');
 				})			
 			}
@@ -92,7 +87,7 @@ exports.update = function(req,res){
 				res.render('quizes/edit',{quiz: req.quiz, errors: error.errors})
 			}else{
 				req.quiz
-				.save({fields: ["pregunta","respuesta"]})
+				.save({fields: ["pregunta","respuesta","tema"]})
 				.then(function(){ res.redirect('/quizes'); })
 			}
 		}	
