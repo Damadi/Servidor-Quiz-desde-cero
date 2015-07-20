@@ -32,7 +32,7 @@ exports.show = function(req,res){
 };
 
 exports.author = function(req,res){ 	
-	res.render('author');
+	res.render('author', {error: []});
 };
 
 exports.new = function(req,res){ 	
