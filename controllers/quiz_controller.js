@@ -3,14 +3,17 @@
 var models = require('../models/models.js');
 
 exports.load = function(req,res,next,quizId){
-	models.Quiz.find(quizId).then(
+	models.Quiz.find({
+		where: { id: Number(quizId)},
+		include: [{model: models.Comment}]
+	}).then(
 		function(quiz){
 			if(quiz){
 				req.quiz = quiz;
 				next();
 			}else{next(new Error('No existe quizId' + quizId));
 		}
-	}).catch(function(error){next(error);});	
+	}).catch(function(error){next(error)});	
 };
 
 exports.index = function(req,res){
@@ -84,7 +87,9 @@ exports.update = function(req,res){
 	.then(
 		function(error){
 			if(error){
-				res.render('quizes/edit',{quiz: req.quiz, errors: error.errors})
+				res.render('quizes/edit',{
+					quiz: req.quiz, 
+					errors: error.errors})
 			}else{
 				req.quiz
 				.save({fields: ["pregunta","respuesta","tema"]})
