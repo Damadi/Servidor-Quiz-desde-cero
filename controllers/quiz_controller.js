@@ -28,6 +28,7 @@ exports.index = function(req,res){
 			res.render('quizes/index', {quizes: quizes,errors:[]});	
 		})	
 };
+
 exports.show = function(req,res){ 
 	models.Quiz.find(req.params.quizId).then(function(quiz){
 		res.render('quizes/show', {quiz: req.quiz,errors:[]});
@@ -37,6 +38,20 @@ exports.show = function(req,res){
 exports.author = function(req,res){ 	
 	res.render('author', {errors: []});
 };
+
+/*exports.count = function(req, res){
+	models.Quiz.findAndCountAll({
+		include: [{model: models.Quiz}]
+	}).then(
+		function(quizCount){
+			if(quizCount){
+				req.quizCount = quizCount;
+				next();
+			}else{
+				req.quizCount = 0;
+				next();}
+	}).catch(function(error){next(error)});	
+};*/
 
 exports.answer = function(req,res){
 	

@@ -21,6 +21,7 @@ router.get('/logout', sessionController.destroy); // destruir sesión
 //Rutas de quizes
 router.get('/author',quizcontroller.author);
 router.get('/quizes',quizcontroller.index);
+//router.get('/quizes/statistics',quizcontroller.statistics);
 router.get('/quizes/:quizId(\\d+)',quizcontroller.show);
 router.get('/quizes/:quizId(\\d+)/answer',quizcontroller.answer);
 router.get('/quizes/nuevo',               sessionController.loginRequired, quizcontroller.nuevo);

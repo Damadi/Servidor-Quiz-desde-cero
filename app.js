@@ -32,6 +32,17 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req,res,next){
+  if(req.session.timestamp){
+    if((new Date().getMinutes() - req.session.timestamp)>1){
+        delete req.session.timestamp;        
+        res.redirect('/logout');
+    }    
+  }  
+  req.session.timestamp = new Date().getMinutes();
+  next();    
+});
+
+app.use(function(req,res,next){
   if(!req.path.match(/\/login|\/logout/)){
       req.session.redir = req.path;
   }
