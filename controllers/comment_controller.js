@@ -18,20 +18,16 @@ exports.load = function(req,res,next, commentId){
 exports.new = function(req,res){
 	res.render('comments/new', { quizId: req.params.quizId, errors: [] });	
 };
-/*
-exports.count = function(req, res){
-	models.Quiz.findAndCountAll({
-		include: [{model: models.Comment}]
-	}).then(
+
+exports.count = function(req, res, next){
+	models.Comment.findAndCountAll().then(
 		function(commentCount){
 			if(commentCount){
-				req.commentCount = commentCount;				
-			}else{
-				req.commentCount = 0;
-				 }
-			next();
+				req.commentCount = commentCount.count;
+				next();				
+			}else{next(new Error('No existe commentId'))}			
 	}).catch(function(error){next(error)});	
-};*/
+};
 
 exports.create = function(req,res){
 	var comment = models.Comment.build({
@@ -65,7 +61,3 @@ exports.publish = function(req, res){
 	.then( function(){res.redirect('/quizes/' + req.params.quizId);})
 	.catch( function(error){next(error)});
 }
-
-exports.count = function(req, res){
-		
-};

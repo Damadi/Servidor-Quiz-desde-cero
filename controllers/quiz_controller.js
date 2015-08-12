@@ -39,19 +39,31 @@ exports.author = function(req,res){
 	res.render('author', {errors: []});
 };
 
-/*exports.count = function(req, res){
+exports.count = function(req, res, next){
 	models.Quiz.findAndCountAll({
-		include: [{model: models.Quiz}]
+		include: [{model: models.Comment}]
 	}).then(
-		function(quizCount){
-			if(quizCount){
-				req.quizCount = quizCount;
+		function(quiz){
+			if(quiz){
+				req.quizCount = quiz.count;
 				next();
-			}else{
-				req.quizCount = 0;
-				next();}
+			}else{next(new Error('No existe preguntas'));
+		}
 	}).catch(function(error){next(error)});	
-};*/
+};
+
+exports.withoutComments = function(req, res, next){
+	models.Quiz.findAndCountAll({
+		include: [{model: models.Comment, where: { publicado : true}}]
+	}).then(
+		function(quiz){
+			if(quiz){
+				req.quizWithoutComments = quiz.rows.length;
+				next();
+			}else{next(new Error('No existe preguntas'));
+		}
+	}).catch(function(error){next(error)});	
+};
 
 exports.answer = function(req,res){
 	
